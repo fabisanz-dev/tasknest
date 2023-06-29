@@ -1,0 +1,22 @@
+FROM node:18-alpine3.15
+
+# Set working directory
+RUN mkdir -p /var/www/app
+WORKDIR /var/www/app
+
+# Copiar el directorio y su contenido
+COPY . ./var/www/app
+COPY package.json tsconfig.json tsconfig.build.json /var/www/app
+RUN yarn install
+
+# Dar permiso para ejecutar la applicación
+RUN adduser --disabled-password testuser
+RUN chown -R testuser:testuser /var/www/pokedex
+USER testuser
+
+# Limpiar el caché
+RUN yarn cache clean --force
+
+EXPOSE 3000
+
+CMD ["yarn", "start:dev"]
