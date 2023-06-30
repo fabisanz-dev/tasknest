@@ -20,6 +20,7 @@ export class TasksController {
   constructor(private readonly tasksService: TasksService) {}
 
   @Post()
+  @Auth()
   create(@Body() createTaskDto: CreateTaskDto) {
     return this.tasksService.create(createTaskDto)
   }
@@ -31,12 +32,8 @@ export class TasksController {
     return this.tasksService.findAll(userId)
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.tasksService.findOne(+id)
-  }
-
   @Patch(':id')
+  @Auth()
   update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateTaskDto: UpdateTaskDto
@@ -45,6 +42,7 @@ export class TasksController {
   }
 
   @Delete(':id')
+  @Auth()
   remove(@Param('id', ParseUUIDPipe) id: string) {
     return this.tasksService.remove(id)
   }

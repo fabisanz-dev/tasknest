@@ -40,10 +40,6 @@ export class TasksService {
     return await this.taskRepository.find({ where: { user: { id: userId } } })
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} task`
-  }
-
   async update(id: string, updateTaskDto: UpdateTaskDto) {
     const { user, ...taskData } = updateTaskDto
 
@@ -67,7 +63,7 @@ export class TasksService {
     if (taskFound) {
       await this.taskRepository.remove(taskFound)
       return {
-        msg: `Task with ID:${taskFound.id} removed`
+        msg: `Task - ID:${id} - removed`
       }
     }
   }
